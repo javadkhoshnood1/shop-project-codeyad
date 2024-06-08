@@ -1,0 +1,17 @@
+{% load static %}
+
+<div dir="rtl" class="mb-3">
+    <h4 style="color: white">دسته بندی ها </h4>
+    <div class="list-unstyled fruite-categorie">
+        {% for ctegory in list_category %}
+
+            <div class="d-flex justify-content-between fruite-name">
+                <a style="color: #3b4c4d"
+                   href="{% url 'product:product_list_c' ctegory.id %}">{{ ctegory.name }}</a>
+                <span></span>
+            </div>
+
+
+        {% endfor %}
+    </div>
+</div>

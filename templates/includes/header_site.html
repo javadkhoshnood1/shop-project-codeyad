@@ -1,0 +1,93 @@
+{% load static %}
+<!-- Spinner Start -->
+<div id="spinner"
+     class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+    <div class="spinner-grow text-primary" role="status"></div>
+</div>
+<!-- Spinner End -->
+
+
+<!-- Navbar start -->
+<!-- Navbar start -->
+<div class="container-fluid fixed-top">
+    <div dir="rtl" style="background-color: #1e2125" class="container topbar  d-none d-lg-block">
+        <div class="d-flex justify-content-between">
+            <div class="top-info ps-2">
+                <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#"
+                                                                                                 class="text-white">اصفهان،
+                    بادرود ، خیابان امام ،خیابان پروینی </a></small>
+                <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">javadkhoshnood194@gmail.com</a></small>
+            </div>
+            <div class="top-link pe-2">
+                <a href="#" class="text-white"><small class="text-white mx-2">درباره ما </small>/</a>
+                <a href="#" class="text-white"><small class="text-white mx-2">تماس با ما </small>/</a>
+                <a href="#" class="text-white"><small class="text-white ms-2"> ارسال نظر </small></a>
+            </div>
+        </div>
+    </div>
+    <div dir="rtl" class="container px-0">
+        <nav class="navbar navbar-expand-xl">
+            <a href="{% url 'Home:index' %}" class="navbar-brand"><h1 style="color: #ffb524 !important"
+                                                                      class="text-primary display-6">diamond</h1></a>
+            <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars text-primary"></span>
+            </button>
+            <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
+                <div class="navbar-nav mx-auto">
+                    <a {% if request.resolver_match.url_name == 'index' %}  style="color: #fd7e14"
+                                                                            {% else %}style="color: #3b4c4d" {% endif %}
+                                                                            href="{% url 'Home:index' %}"
+                                                                            class="nav-item nav-link display-5">صفحه
+                        اصلی</a>
+                    <a  {% if request.resolver_match.url_name == 'product_list' %}  style="color: #fd7e14"
+                                                                                    {% else %}style="color: #3b4c4d" {% endif %}
+                                                                                    href="{% url 'product:product_list' %}"
+                                                                                    class="nav-item nav-link active display-5">فروشگاه</a>
+
+                    <div class="nav-item dropdown">
+                        <a style="color: #3b4c4d" href="#" class="nav-link dropdown-toggle display-5"
+                           data-bs-toggle="dropdown">Pages</a>
+                        <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                            <a style="color: #3b4c4d" href="cart.html" class="dropdown-item">Cart</a>
+                            <a style="color: #3b4c4d" href="chackout.html" class="dropdown-item">Chackout</a>
+                            <a style="color: #3b4c4d" href="testimonial.html" class="dropdown-item">Testimonial</a>
+                            <a style="color: #3b4c4d" href="404.html" class="dropdown-item">404 Page</a>
+                        </div>
+                    </div>
+                    <a style="color: #3b4c4d" href="contact.html" class="nav-item nav-link display-5">Contact</a>
+                    {% if request.user.is_authenticated %}
+                        <a style="color: #3b4c4d" href="{% url 'acounts:logout' %}" class="nav-item nav-link display-5">خروج
+                            از حساب</a>
+                    {% else %}
+                        <a {% if request.resolver_match.url_name == 'login' %}  style="color: #fd7e14"
+                                                                                {% else %}style="color: #3b4c4d" {% endif %}
+                                                                                href="{% url 'acounts:login' %}"
+                                                                                class="nav-item nav-link display-5">ورود
+                            به حساب </a>
+
+
+                    {% endif %}
+                </div>
+                <div class="d-flex me-0">
+                    <a data-bs-toggle="modal" data-bs-target="#searchModal"><i style="color: red"
+                                                                               class="fas fa-search fa-2x"></i></a>
+                    <a href="#" class="position-relative me-4 my-auto">
+                        <i class="fa fa-shopping-bag fa-2x "></i>
+                        {% if request.user.is_authenticated %}
+                            <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
+                                  style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                            </a>
+                        {% endif %}
+                    <a style="margin-right: 20px"                     {% if request.user.is_authenticated %}{% else %}
+                       href="{% url 'acounts:register' %}" {% endif %}
+                       class="my-auto ">
+                        <i style="color: blue" class="fas fa-user fa-2x"></i>
+
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<!-- Navbar End --><!-- Navbar End -->
