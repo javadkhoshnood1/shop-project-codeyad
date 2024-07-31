@@ -6,31 +6,43 @@ from jalali_date import datetime2jalali, date2jalali
 
 from accounts.models import User
 
-Choise_color_product = (
-    ('ابی', "ابی"),
-    ('سفید', "سفید"),
-    ('سیاه', 'سیاه'),
-    ('قرمز', "قرمز")
 
-)
+class Color(models.Model):
+    name = models.CharField(max_length=20, verbose_name="رنگ محصول")
+
+    class Meta:
+        verbose_name = "رنگ"
+        verbose_name_plural = "رنگ ها "
+
+    def __str__(self):
+        return self.name
+
+
+class Size(models.Model):
+    size = models.IntegerField(verbose_name="سایز محصول")
+
+    class Meta:
+        verbose_name = "سایز"
+        verbose_name_plural = "سایز"
+
+    def __str__(self):
+        return str(self.size)
+
+
 Choise_quality_product = (
     ('دارای تضمین اصالت کالا', " دارای تضمین اصالت کالا"),
     (' تضمین اصالت کالا ندارد ', " تضمین اصالت کالا ندارد "),
 
 )
-Choise_size_product = (
-    (30, 30),
-    (31, 31), (32, 32), (32, 32), (33, 33), (34, 34), (35, 35), (36, 36), (37, 37), (38, 38), (39, 39), (40, 40),
-    (41, 41), (42, 42),
-    (43, 43), (44, 44), (45, 45),
-
-)
 
 
 class Category(models.Model):
+    parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True, verbose_name="دسته بندی پدر")
+    slug = models.SlugField(null=True, blank=True, verbose_name="کد ")
     name = models.CharField(max_length=200, null=True, blank=True, verbose_name="اسم سته بندی")
     body = models.TextField(null=True, blank=True, verbose_name="توضیحات دسته بندی")
     image = models.ImageField(null=True, blank=True, upload_to="category_image", verbose_name="عکس دسته بندی")
+    created_at = models.DateTimeField(null=True, auto_now_add=True, blank=True, verbose_name="تاریخ اضافه شدن ")
 
     def __str__(self):
         return self.name
@@ -39,14 +51,16 @@ class Category(models.Model):
         verbose_name = "دسته بندی"
         verbose_name_plural = "دسته بندی ها "
 
+    def Created_at(self):
+        return date2jalali(self.created_at)
+
 
 class Product(models.Model):
     name = models.CharField(max_length=500, null=True, blank=True, verbose_name="نام محصول")
     image = models.ImageField(upload_to="productimage", null=True, blank=True, verbose_name="عکس محصول")
     price = models.BigIntegerField(default=0, null=True, blank=True, verbose_name="قیمت محصول")
-    color = models.CharField(choices=Choise_color_product, max_length=4, null=True, blank=True,
-                             verbose_name="رنگ محصول")
-    size = models.CharField(choices=Choise_size_product,max_length=2, null=True, blank=True, verbose_name="اندازه مصحول")
+    size = models.ManyToManyField(Size, verbose_name="سایز محصول")
+    color = models.ManyToManyField(Color, verbose_name="رنگ محصول")
     discount = models.IntegerField(default=0, null=True, blank=True, verbose_name="تخفیف محصول")
     text = models.TextField(null=True, blank=True, verbose_name="توضیحات محصول")
     created_at = models.DateField(auto_created=True, blank=True, null=True, verbose_name="تاریخ افزودن محصول")
@@ -98,3 +112,16 @@ class Attributes(models.Model):
 
     def Image(self):
         return format_html(self.icon_html)
+
+
+class InformationProduct(models.Model):
+    product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.CASCADE, related_name="informatin",
+                                verbose_name="محصول")
+    text = models.TextField()
+
+    class Meta:
+        verbose_name = "اطلاعات"
+        verbose_name_plural = "اطلاعات ها"
+
+    def __str__(self):
+        return self.text[:30]

@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+    محصولات فروشگاه
+{% endblock %}
+
+
+{% block countent %}
+
+    <body dir="rtl" style="background-color: #1e2125">
+
+    <!-- Modal Search Start -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content rounded-0">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex align-items-center">
+                    <div class="input-group w-75 mx-auto d-flex">
+                        <input type="search" class="form-control p-3" placeholder="keywords"
+                               aria-describedby="search-icon-1">
+                        <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Search End -->
+
+    <!-- Single Page Header start -->
+    <div class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6">فروشگاه</h1>
+        <ul class="list-unstyled d-flex align-items-center justify-content-center mb-0">
+            <li class="breadcrumb-item text-white "><a class="text-white" href="{% url 'Home:index' %}">صفحه اصلی</a>
+            </li>
+            /
+            <li class="breadcrumb-item">
+                <a  {% if category_name %} style="color: white" {% else %} style="color: #81c408 !important"{% endif %}
+                                           href="{% url 'product:product_list' %}">فروشگاه</a>
+            </li>
+            {% if category_name %}
+                <li class="breadcrumb-item" style="color: white">دسته بندی ها</li>
+                <li class="breadcrumb-item" style="color: #81c408 !important">{{ category_name }}</li>
+
+            {% endif %}
+        </ul>
+    </div>
+    <!-- Single Page Header End -->
+
+
+    <!-- Fruits Shop Start-->
+    <div class="container-fluid fruite">
+        <div class="container pt-5">
+            <div class="row g-4">
+                <div class="col-lg-12">
+                    <div class="row g-4">
+                        <form action="{% url 'product:search' %}" method="post" class="col-xl-3">
+                            {% csrf_token %}
+                            <div dir="rtl" class="input-group w-100 mx-auto d-flex">
+                                {{ form.name }}
+                                <button type="submit" class="search-icon-o"><i
+                                        class="fa fa-search"></i></button>
+                            </div>
+                        </form>
+                        {% if category_name %}
+                            <div class="col-xl-9 ">
+                                <h3 style="color: white;text-align: center" class="mb-4">همه محصولات
+                                    دسته {{ category_name }}</h3>
+                            </div>
+                        {% else %}
+                            {% if name_search %}
+                                <div class="col-xl-9 text-center "><span
+                                        style="font-size: 18px;color: #fd7e14"> کلمه مد نظ شما :{{ name_search }}</span>
+                                </div>
+                            {% else %}
+                                <div class="col-xl-9 ">
+                                    <h1 style="color: white;text-align: center" class="mb-4">همه محصصولات فروشگاه</h1>
+                                </div>
+                            {% endif %}
+
+                        {% endif %}
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-lg-3">
+                            <div class="row g-4">
+                                <div class="col-lg-12">
+                                    {% include 'includes/sidbar_category.html' %}
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <h4 style="color: white" class="mb-2">قیمت </h4>
+                                        <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput"
+                                               min="0" max="3000" value="0" oninput="amount.value=rangeInput.value">
+                                        <output id="amount" name="amount" min-velue="0" max-value="3000"
+                                                for="rangeInput">0
+                                        </output>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center my-4">
+                                    <a href="#"
+                                       class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">اعمال
+                                        تغییرات </a>
+                                </div>
+                                <!--this is inja -->
+                                {% include 'includes/sidbar_discount_product.html' %}
+                            </div>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="row g-4 justify-content-center">
+
+                                {% if products %}
+                                    {% for product in products %}
+                                        <div class="container card-product">
+                                            <div class="card">
+                                                <div class="card-head">
+
+                                                    <img style="margin-bottom: 100px" width="150" height="150"
+                                                         src="{{ product.image.url }}" alt="Shoe"
+                                                         class="product-img">
+                                                    <div class="product-detail text-center">
+                                                        <a href="{% url "product:product_detail" product.id %}"><h2
+                                                                class="text-center mt-2">{{ product.name }}</h2>
+                                                        </a> {{ product.text|truncatewords:10 }}
+                                                    </div>
+                                                    {#                                                <span class="back-text">#}
+                                                    {#              FAS#}
+                                                    {#            </span>#}
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="product-desc">
+        <span class="product-title text-center">
+
+                دسته بندی :
+            {% for i in product.category.all %}
+
+                {{ i.name }},
+
+            {% endfor %}
+            <br>
+                <span class="badge">
+                  New
+                </span>
+        </span>
+                                                        <span class="text-center product-caption">
+ضمانت :{{ product.quality }}
+              </span>
+                                                    </div>
+                                                    <div class="product-properties d-flex justify-content-center align-items-center mt-3    ">
+                                                        <ul class="ul-color">
+                                                            <li><a href="#" class="orange active"></a></li>
+                                                            <li><a href="#" class="green"></a></li>
+                                                            <li><a href="#" class="yellow"></a></li>
+                                                        </ul>
+                                                        </span>
+                                                        <span class="product-price text-center ">
+                <b>{{ product.price|intcomma:0 }}</b>تومان
+              </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    {% endfor %}
+                                {% else %}
+                                    <h4 class="text-center" style="color:#fd7e14 ">محصولی با اسم مد نظر شما یافت
+                                        نشد</h4>
+
+                                {% endif %}
+                                <div class="col-12">
+                                    <div dir="ltr" class="pagination d-flex justify-content-center mt-5 mb-2 ">
+                                        {% if page_obj.has_previous %}
+                                            <a href="?page={{ page_obj.previous_page_number }}"
+                                               class="rounded">&laquo;</a>
+                                        {% endif %}
+
+                                        {% for  i in page_obj.paginator.page_range %}
+
+                                            <a href="?page={{ i }}" class="active rounded">{{ i }}</a>
+
+
+
+                                        {% endfor %}
+                                        {% if page_obj.has_next %}
+
+                                            <a href="?page={{ page_obj.next_page_number }}" class="rounded">&raquo;</a>
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fruits Shop End-->
+
+
+    </body>
+
+    </html>
+{% endblock %}
+
+
+

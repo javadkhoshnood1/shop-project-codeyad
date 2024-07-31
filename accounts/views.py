@@ -1,3 +1,5 @@
+import os
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.utils.crypto import get_random_string
@@ -6,10 +8,10 @@ from django.urls import reverse
 from django.views import View
 from .forms import UserLoginForm, UserRegisterForm, UserVerificationCodeForm, EditProfileForm
 import ghasedakpack
+from .forms import EditProfileUserForm
 
 from random import randint
 from uuid import uuid4
-
 from .models import RegisterUserOtp, User
 
 sms = ghasedakpack.Ghasedak("5a36e1045f08fd777bd67da30f8702863765d5f8ceb420324c7da377aafd5707")
@@ -55,9 +57,10 @@ class UserRegisterView(View):
             data = form.cleaned_data
             randomcode = randint(1000, 9999)
             print(data["phone"], randomcode)
-            token = get_random_string(length=150)
-            sms.verification({'receptor': data["phone"], 'type': '1', 'template': 'randjavad', 'param1': randomcode})
 
+            token = get_random_string(length=150)
+
+            sms.verification({'receptor': data["phone"], 'type': '1', 'template': 'randjavad', 'param1': randomcode})
             RegisterUserOtp.objects.create(phone=data["phone"], code=randomcode, token=token)
             return redirect(f"/acounts/register/code/?phone={token}")
 
@@ -78,6 +81,7 @@ class UserVerificationcodeView(View):
             if RegisterUserOtp.objects.filter(code=data["code"], token=token).exists():
                 otp = RegisterUserOtp.objects.get(token=token)
                 user = User.objects.create_user(phone=otp.phone)
+
                 phone = user.phone
                 login(request, user)
                 otp.delete()
@@ -92,7 +96,7 @@ class UserEditView(View):
     def get(self, request):
         form = EditProfileForm(instance=request.user)
 
-        return render(request, "acounts/edit_profile.html", {"form": form})
+        return render(request, "acounts/edit_profile_register.html", {"form": form})
 
     def post(self, request):
         phone = request.GET.get("phone")
@@ -101,7 +105,39 @@ class UserEditView(View):
         if form.is_valid():
             form.save()
             user = User.objects.get(phone=phone)
+            request.user.set_password(request.POST.get("password"))
+            request.user.save()
             login(request, user)
-            return redirect("/")
+            return redirect("/acounts/login")
+
+        return render(request, "acounts/edit_profile_register.html", {"form": form})
+
+
+class UserEditProfileView(View):
+
+    def get(self, request):
+        form = EditProfileUserForm(instance=request.user)
 
         return render(request, "acounts/edit_profile.html", {"form": form})
+
+    def post(self, request):
+        form = EditProfileForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            request.user.discription = request.POST.get("discription")
+            request.user.email = request.POST.get("email")
+
+            if len(request.FILES) != 0:
+                request.user.image = request.FILES["image"]
+                request.user.set_password(request.POST.get("password2"))
+                request.user.save()
+
+            form.save()
+
+            print("form ok")
+            return redirect("/")
+        return render(request, "acounts/edit_profile.html", {"form": form})
+
+
+def delete_user_view(request):
+    request.user.delete()
+    return redirect("/")

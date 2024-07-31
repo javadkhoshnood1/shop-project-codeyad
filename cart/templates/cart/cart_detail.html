@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+    سبد خرید {{ request.user.fullname }}
+{% endblock %}
+{% block countent %}
+    <body dir="rtl" style="background-color: #1e2125">
+    !-- Modal Search Start -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content rounded-0">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex align-items-center">
+                    <div class="input-group w-75 mx-auto d-flex">
+                        <input type="search" class="form-control p-3" placeholder="keywords"
+                               aria-describedby="search-icon-1">
+                        <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Search End -->
+
+    <div style="margin-top: -150px" class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6">فروشگاه</h1>
+        <ul class="list-unstyled d-flex align-items-center justify-content-center mb-0">
+            <li class="breadcrumb-item text-white "><a class="text-white" href="{% url 'Home:index' %}">صفحه اصلی</a>
+            </li>
+            /
+            <li class="breadcrumb-item">
+                <a style="color: white"
+                   href="{% url 'product:product_list' %}">فروشگاه</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a style="color: #81c408"
+                   href="{% url 'cart:cart_product' %}">سبد خرید</a>
+            </li>
+
+
+        </ul>
+    </div>
+
+    <!-- Cart Page Start -->
+    <div class="container-fluid ">
+        <div class="container py-5">
+            <h1 style="margin-bottom: 20px;border-bottom: 1px solid #FFB524;padding: 10px">لیست سبد خرید شما</h1>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">image</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">color</th>
+                        <th scope="col">size</th>
+                        <th scope="col">tedad</th>
+
+
+                        <th scope="col">total</th>
+                        <th scope="col">delete</th>
+
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in cart %}
+                        <tr>
+                            <th scope="row">
+                                <div class="d-flex align-items-center">
+                                    <img src="{{ item.product.image.url }}" class="img-fluid me-5 rounded-circle"
+                                         style="width: 80px; height: 80px;" alt="">
+                                </div>
+                            </th>
+                            <td>
+                                <p class="mb-0 mt-4">{{ item.product.name }}</p>
+                            </td>
+                            <td>
+                                <p class="mb-0 mt-4">{{ item.price|intcomma:0 }}تومان</p>
+                            </td>
+                            <td>
+                                <p class="mb-0 mt-4">{{ item.color }} </p>
+                            </td>
+                            <td>
+                                <p class="mb-0 mt-4">{{ item.size }} </p>
+                            </td>
+                            <td>
+                                <p class="mb-0 mt-4">{{ item.tedad }}</p>
+                            </td>
+
+                            <td>
+                                <p class="mb-0 mt-4">{{ item.total|intcomma:0 }}تومان</p>
+                            </td>
+                            <td>
+                                {#                                <a href="{% url "cart:delete_product" item.uniqe %}"#}
+                                {#                                   class="btn btn-md rounded-circle bg-light border mt-4">#}
+                                {#                                    <i class="fa fa-times text-danger"></i>#}
+                                {#                                </a>#}
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div dir="ltr" class="row g-4 justify-content-center" style="margin-top: 20px">
+                <div class="col-8"></div>
+                <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
+                    <div class="bg-light rounded" dir="rtl">
+                        <form action="{% url 'cart:cart_product' %}" method="post">
+
+                            {% csrf_token %}
+
+                            <div class="p-4">
+                                <h1 class="display-6 mb-4">سبد خرید <span class="fw-normal"> نهایی</span></h1>
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h5 class="mb-0 me-4">مبلغ کل محصولات:</h5>
+                                    <p class="mb-0">{{ total|intcomma:0 }}تومان</p>
+
+                                </div>
+                                <div class="d-flex p-3 border-top justify-content-between">
+                                    <h5 class="mb-0 me-4">هزینه ارسال : </h5>
+                                    <p class="mb-0">0تومان</p>
+
+                                </div>
+
+                                <div class="d-flex p-3 border-top justify-content-between" style="margin-top: 10px">
+                                    <h5 class="mb-0 me-4">تخفیف :</h5>
+                                    <p class="mb-0">0تومان</p>
+
+                                </div>
+                            </div>
+                            <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
+                                <h5 class="mb-0 me-4">مبلغ قابل پرداخت : </h5>
+                                <p style="margin-left: 5px" class="mb-0">{{ total|intcomma:0 }}تومان</p>
+                            </div>
+                            <div class="py-4 mb-4 d-flex justify-content-center">
+                                {% if user_address %}
+                                    <a href="{% url 'cart:add_order_address' %}"
+                                       class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase"
+                                       type="button">رفتن به صفحه ادرس ها </a>
+
+                                {% else %}
+                                    <a href="{% url 'cart:cart_chackout' %}"
+                                       class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase"
+                                       type="button">ثبت اطلاعات و پرداخت انلاین</a>
+                                {% endif %}
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Cart Page End -->
+
+    </body>
+
+
+{% endblock %}

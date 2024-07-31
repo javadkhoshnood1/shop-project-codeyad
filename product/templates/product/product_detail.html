@@ -2,8 +2,8 @@
 {% load static %}
 {% load humanize %}
 {% block title %}
-       {{ product.name }}
-  {% endblock %}
+    {{ product.name }}
+{% endblock %}
 
 {% block countent %}
 
@@ -64,49 +64,67 @@
                         <div class="col-lg-6">
                             <div class="border rounded">
                                 <a href="#">
-                                    <img src="{{ product.image.url }}" class="img-fluid rounded" alt="Image">
+                                    <img width="405" height="400" src="{{ product.image.url }}" class="rounded"
+                                         alt="Image">
                                 </a>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <h4 class="fw-bold mb-3 text-white">{{ product.name }}</h4>
-                            <p class="mb-3">دسته بندی محصول :{% for category in product.category.all %}
-                                {{ category.name }},
+                            <p class="mb-3"><span style="color: white">دسته بندی : </span>
+                                {% for category in product.category.all %}
+                                    {{ category.name }},
 
-                            {% endfor %}
+                                {% endfor %}
                             </p>
-                            <div class="col-lg-6">
-                                <p class="mb-3">رنگ محصول : {{ product.color }}</p>
-                            </div>
-                            <div class="d-flex mb-4">
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <p class="mb-4">{{ product.text }}</p>
+
+
                             <p class="mb-4">{{ product.text }}</p>
                             <h5 class="mb-3 title-product text-white">{{ product.price|intcomma:0 }}تومان </h5>
+                            <form method="post" action="{% url 'cart:add_product' product.id %}">
+                                {% csrf_token %}
+                                <div id="pmpm" class="input-group quantity mb-5" style="width: 100px;">
 
-                            <div class="input-group quantity mb-5" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
+                                    <input id="tedad" type="number" min="0" max="10" name="tedad"
+                                           class="form-control form-control-lg" value=1
+                                    >
+
                                 </div>
-                                <input type="text" class="form-control form-control-sm text-center border-0"
-                                       value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
+                                <div class="col-lg-6 mb-3"><span style="color: white">رنگ بندی :</span>
+                                    {% for color in product.color.all %}
+                                        <input type="radio" id="html" name="color" value="{{ color.name }}"
+                                               style="background-color: #FFB524">
+                                        <label for="html" style="margin-left: 8px">{{ color.name }}</label>
+
+                                    {% endfor %}
                                 </div>
-                            </div>
-                            <a href="#"
-                               class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">افزودن
-                                به سبد خرید<i
-                                        class="fa fa-shopping-bag me-2 text-primary"></i> </a>
+                                <div class="col-lg-6 mb-3"><span style="color: white">سایز موجود : </span>
+                                    {% for size in product.size.all %}
+                                        <input type="radio" id="html" name="size" value="{{ size.size }}"
+                                               style="background-color: #FFB524">
+                                        <label for="html" style="margin-left: 8px">{{ size.size }}</label>
+
+                                    {% endfor %}
+                                </div>
+                                <div class="d-flex mb-4">
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                {% if request.user.is_authenticated %}
+                                    <button type="submit"
+                                            class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">
+                                        افزودن
+                                        به سبد خرید<i
+                                            class="fa fa-shopping-bag me-2 text-primary"></i></button>
+
+                                {% else %}
+                                    <a href="{% url 'acounts:login' %}" class="btn btn-outline-danger">برای خرید وارد
+                                        حساب کاربری شوید</a>
+                                {% endif %}
+                            </form>
                         </div>
                         <div class="col-lg-12">
                             <nav>
@@ -119,6 +137,10 @@
                                     <button class="nav-link border-white border-bottom-0" type="button" role="tab"
                                             id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
                                             aria-controls="nav-mission" aria-selected="false">نظرات درباره محصول
+                                    </button>
+                                    <button class="nav-link border-white border-bottom-0" type="button" role="tab"
+                                            id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-info"
+                                            aria-controls="nav-info" aria-selected="false">ویژگی های محصول
                                     </button>
                                 </div>
                             </nav>
@@ -221,13 +243,29 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane" id="nav-vision" role="tabpanel">
-                                    <p class="text-dark">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et
-                                        tempor sit. Aliqu diam
-                                        amet diam et eos labore. 3</p>
-                                    <p class="mb-0">Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos
-                                        labore.
-                                        Clita erat ipsum et lorem et sit</p>
+                                <div class="tab-pane" id="nav-info" role="tabpanel">
+                                    <div class="px-2">
+                                        <div class="row g-6">
+                                            <div class="col-8">
+                                                <div class="d-flex justify-content-center align-items-center">
+
+                                                    ویژگی های محصول
+                                                </div>
+                                                <div class="row align-items-center py-2">
+                                                    {% for i in product.informatin.all %}
+                                                        <div class="col-6 d-flex justify-content-center align-items-center"
+                                                             style="background-color: #FFB524;color: black;border-radius: 10px;padding: 5px;margin-top: 10px">
+                                                            <p class="mb-0">{{ i.text }}</p>
+                                                        </div>
+                                                    {% endfor %}
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -316,5 +354,7 @@
     </div>
 
     <!-- Vesitable Shop End -->
+
+
 
 {% endblock %}

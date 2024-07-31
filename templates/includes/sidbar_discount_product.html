@@ -1,12 +1,14 @@
 {% load static %}
+{% load humanize %}
 <div class="col-lg-12" dir="rtl">
     <h4 style="color: white" class="mb-3">محصولات دارای تخفیف</h4>
-    <div class="d-flex align-items-center justify-content-start">
-        <div class="rounded me-4" style="width: 100px; height: 100px;">
-            <img src="{% static 'img/featur-1.jpg' %}" class="img-fluid rounded" alt="">
+{% for item in products_sidbar_discount %}
+        <div class="d-flex align-items-center justify-content-start">
+        <div class="rounded me-4" style="width: 100px; height: 100px; margin-left: 10px">
+            <img src="{{ item.image.url }}" class="img-fluid rounded" alt="">
         </div>
         <div>
-            <h6 class="mb-2">Big Banana</h6>
+            <h6 class="mb-2" style="color: white">{{ item.name }}</h6>
             <div class="d-flex mb-2">
                 <i class="fa fa-star text-secondary"></i>
                 <i class="fa fa-star text-secondary"></i>
@@ -14,50 +16,19 @@
                 <i class="fa fa-star text-secondary"></i>
                 <i class="fa fa-star"></i>
             </div>
-            <div class="d-flex mb-2">
-                <h5 class="fw-bold me-2">2.99 $</h5>
-                <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+            <div class="mb-2">
+                <h5 class="text-danger text-decoration-line-through">{{ item.discount|intcomma:0 }}تومان </h5>
+                <h5 class="fw-bold me-2" style="color: limegreen;display: block">{{ item.price|intcomma:0 }} تومان</h5>
             </div>
         </div>
     </div>
-    <div class="d-flex align-items-center justify-content-start">
-        <div class="rounded me-4" style="width: 100px; height: 100px;">
-            <img src="{% static 'img/featur-2.jpg' %}" class="img-fluid rounded" alt="">
-        </div>
-        <div>
-            <h6 class="mb-2">Big Banana</h6>
-            <div class="d-flex mb-2">
-                <i class="fa fa-star text-secondary"></i>
-                <i class="fa fa-star text-secondary"></i>
-                <i class="fa fa-star text-secondary"></i>
-                <i class="fa fa-star text-secondary"></i>
-                <i class="fa fa-star"></i>
-            </div>
-            <div class="d-flex mb-2">
-                <h5 class="fw-bold me-2">2.99 $</h5>
-                <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-            </div>
-        </div>
-    </div>
-    <div class="d-flex align-items-center justify-content-start">
-        <div class="rounded me-4" style="width: 100px; height: 100px;">
-            <img src="{% static 'img/featur-3.jpg' %}" class="img-fluid rounded" alt="">
-        </div>
-        <div>
-            <h6 class="mb-2">Big Banana</h6>
-            <div class="d-flex mb-2">
-                <i class="fa fa-star text-secondary"></i>
-                <i class="fa fa-star text-secondary"></i>
-                <i class="fa fa-star text-secondary"></i>
-                <i class="fa fa-star text-secondary"></i>
-                <i class="fa fa-star"></i>
-            </div>
-            <div class="d-flex mb-2">
-                <h5 class="fw-bold me-2">2.99 $</h5>
-                <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-            </div>
-        </div>
-    </div>
+
+
+
+    {% endfor %}
+
+
+
     <div class="d-flex justify-content-center my-4">
         <a href="#"
            class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Vew

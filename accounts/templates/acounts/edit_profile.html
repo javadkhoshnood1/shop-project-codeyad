@@ -1,119 +1,214 @@
 {% load static %}
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <title>ورود به حساب</title>
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <meta charset="utf-8">
 
 
+    <title>تغیر پروفایل / {{ request.user.fullname }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style type="text/css">
+        body {
+            margin-top: 20px;
+            background: #f8f8f8
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="{% static 'edit_profile.css' %}">
+
+
+    <!-- Template Stylesheet -->
 </head>
+<body dir="rtl">
+<div class="container">
+    <div class="row flex-lg-nowrap">
+        <div class="col">
+            <div class="row">
+                <div class="col mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="e-profile">
+                                <div class="row">
+                                    <div class="col-12 col-sm-auto mb-3">
+                                        <div class="mx-auto" style="width: 140px;">
+                                            <div class="d-flex justify-content-center align-items-center rounded"
+                                                 style="height: 140px; background-color: rgb(233, 236, 239);">
 
-<body> <!-- partial:index.partial.html -->
+                                                {% if request.user.image %}
+                                                    <img class="img-user" src="{{ request.user.image.url }}">
 
-<section><span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span>
+                                                {% endif %}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                                        <div class="text-center text-sm-right mb-2 mb-sm-0">
+                                            <h4 dir="rtl"
+                                                class="pt-sm-2 pb-1 mb-0 text-nowrap">{{ request.user.fullname }}</h4>
+                                            <p class="mb-0">@johnny.s</p>
+                                            <div class="text-muted"><small> تاریخ اخرین ورود
+                                                : {{ request.user.Created_at }}</small>
+                                            </div>
+                                            <div class="mt-2">
+                                                <a href="#profilephotot">
+                                                    <button class="btn btn-chanage btn-sm" type="button">تغییر عکس
+                                                        پروفایل
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="text-center text-sm-right">
+                                            <span class="badge badge-secondary">administrator</span>
+                                            <div class="text-muted"><small>{{ request.user.Created_at }}</small></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item item-tab">تغییر اطلاعات کاربر</li>
+                                </ul>
+                                <div class="tab-content pt-3">
+                                    <div class="tab-pane active">
+                                        <form class="form" method="post" enctype="multipart/form-data" >
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <p class=" d-flex justify-content-start align-items-center">{{ form.phone.label }}</p>
+                                                                {{ form.phone }}
+                                                                {#                                                                <input class="form-control" type="text" name="name"#}
+                                                                {#                                                                       placeholder="John Smith" value="John Smith">#}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <p class=" d-flex justify-content-start align-items-center">{{ form.fullname.label }}</p>
+                                                                {{ form.fullname }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <p class=" d-flex justify-content-start align-items-center">
+                                                                    ایمیل </p>
+                                                                {{ form.email }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-3">
+                                                            <div class="form-group">
+                                                                <p class=" d-flex justify-content-start align-items-center">
+                                                                    نوضیحات اضافی</p>
+                                                                {{ form.discription }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col" id="profilephotot">
+                                                            <div class="form-group">
+                                                                <p class=" d-flex justify-content-start align-items-center">
+                                                                    تغییر عکس پروفایل </p>
+                                                                {{ form.image }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 col-sm-6 mb-3">
+                                                    <div class="mb-2"><h5
+                                                            class=" d-flex justify-content-start align-items-center">
+                                                        نغییر رمز عبور</h5>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <p class=" d-flex justify-content-start align-items-center">
+                                                                    رمز عبور قبلی</p>
+                                                                {{ form.password }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <p class=" d-flex justify-content-start align-items-center">
+                                                                    رمز عبور جدید</p>
 
-    <div class="signin">
+                                                                {{ form.password1 }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <p class=" d-flex justify-content-start align-items-center">
+                                                                    تکرار رمز عبور </p>
 
+                                                                {{ form.password2 }}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
 
-        <div class="content">
+                                                <div class="col d-flex justify-content-end">
 
-            {% if form.non_field_errors %}
-                <h6 style="color: white;background-color: red;border-radius: 10px;padding: 13px;font-size: 14px">{{ form.non_field_errors }}</h6>
+                                                    <button type="submit"
+                                                            class="btn btn-outline-success"
+                                                    >ذخیره
+                                                        تغییرات
+                                                    </button>
 
-            {% endif %}
-
-            {% if form.errors %}
-
-                <h6 style="color: white;background-color: red;border-radius: 10px;padding: 13px;font-size: 14px">{{ form.errors }}</h6>
-
-
-            {% else %}
-                <h2>ورود به حساب کاربری</h2>
-
-            {% endif %}
-            <form class="form" method="post">
-                {% csrf_token %}
-
-                <p class="text-white" dir="rtl">{{ form.phone.label }}
-                </p>
-                <div class="inputBox">
-
-                    {{ form.phone }}
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <p class="text-white" dir="rtl">{{ form.fullname.label }}
-                </p>
-                <div class="inputBox">
-
-                    {{ form.fullname }}
+                <div class="col-12 col-md-3 mb-3">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <button class="btn  btn-outline-danger"><a style="color: white"
+                                                                           href="{% url 'acounts:logout' %}">خروج از
+                                    حساب کاربری</a></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="card-title font-weight-bold d-flex justify-content-start align-items-center">حذف
+                                حساب کاربری</h6>
+                            <p class="d-flex justify-content-start align-items-center">(با حذف کردن حساب خود دسترسی به
+                                سبد خرید از بین می رود.)</p>
+                            <button class="btn  btn-danger"><a style="color: white"
+                                                               href="{% url 'acounts:delete_user' %}">حذف حساب کاربری
+                                من</a></button>
+                        </div>
+                    </div>
                 </div>
-
-                <p class="text-white" dir="rtl">{{ form.password.label }}
-                </p>
-                <div class="inputBox">
-
-                    {{ form.password }}
-                </div>
-
-
-                <div class="d-flex justify-content-around align-items-center">
-
-                    <button type="submit" class="btn btn_submit">تکمیل اطلاعات</button>
-
-
-                </div>
-
-            </form>
-
+            </div>
         </div>
-
     </div>
+</div>
 
-</section> <!-- partial -->
 
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+
+
+</script>
+<script>
+
+</script>
 </body>
-
 </html>

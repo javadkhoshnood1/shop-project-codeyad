@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+
+    درباره فروشکاه ما
+{% endblock %}
+
+
+{% block countent %}
+
+    <body dir="rtl" style="background-color: #1e2125">
+
+
+    <!-- Modal Search Start -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content rounded-0">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex align-items-center">
+                    <div class="input-group w-75 mx-auto d-flex">
+                        <input type="search" class="form-control p-3" placeholder="keywords"
+                               aria-describedby="search-icon-1">
+                        <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Search End -->
+
+
+    <!-- Single Page Header start -->
+    <div class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6">درباره ما </h1>
+        <ul class="list-unstyled d-flex align-items-center justify-content-center mb-0">
+            <li class="breadcrumb-item text-white "><a class="text-white" href="{% url 'Home:index' %}">صفحه اصلی</a>
+            </li>
+            /
+            <li class="breadcrumb-item">
+                <a  {% if category_name %} style="color: white" {% else %} style="color: #fd7e14"{% endif %}
+                                           href="{% url "about:about" %}">درباره ما </a>
+            </li>
+
+        </ul>
+    </div>
+    <!-- Single Page Header End -->
+
+
+    <!-- Contact Start -->
+    <div class="container-fluid contact py-5">
+        <div class="container py-5">
+            <div class="p-5 bg-light rounded">
+                <div class="row g-4">
+                    <div class="col-12">
+                        <div class="text-center mx-auto" style="max-width: 700px;">
+                            <h1 style="color: #fd7e14">درباره فروشگاه ما </h1>
+                            <p class="mb-4">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از
+                                طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و
+                                برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
+                                باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را
+                                می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان
+                                خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و
+                                دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل
+                                حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد
+                                استفاده قرار گیرد.. <a href="https://htmlcodex.com/contact-form" style="color: #fd7e14">Download
+                                    Now</a>.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="h-100 rounded">
+                            <iframe class="rounded w-100"
+                                    style="height: 400px;"
+                                    src="https://neshan.org/maps/#c33.695-52.006-16z-0p"
+                                    loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <form action="" class="">
+                            <input type="text" class="w-100 form-control border-0 py-3 mb-4"
+                                   placeholder="نام و نام خانوادگی ">
+                            <input type="email" class="w-100 form-control border-0 py-3 mb-4"
+                                   placeholder="ایمیل شما ">
+                            <textarea class="w-100 form-control border-0 mb-4" rows="5" cols="10"
+                                      placeholder="پیام شما "></textarea>
+                            <button class="w-100 btn form-control border-secondary py-3 bg-white text-primary "
+                                    type="submit">ارسال ایمیل
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="d-flex p-4 rounded mb-4 bg-white">
+                            <i class="fas fa-map-marker-alt fa-2x  me-4" style="color: #fd7e14 ;margin-left: 10px"></i>
+                            <div>
+                                <h4>ادرس فروشگاه</h4>
+                                <p class="mb-2">اضفهان بادرود خیابان امام خیابان پروینی کوی شهریار پلاک 21</p>
+                            </div>
+                        </div>
+                        <div class="d-flex p-4 rounded mb-4 bg-white">
+                            <i class="fas fa-envelope fa-2x  me-4" style="color: #fd7e14 ;margin-left: 10px"></i>
+                            <div>
+                                <h4>ایمیل فروشگاه</h4>
+                                <p class="mb-2">javadkhoshnood194@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="d-flex p-4 rounded bg-white">
+                            <i class="fa fa-phone-alt fa-2x  me-4" style="color: #fd7e14;margin-left: 10px"></i>
+                            <div>
+                                <h4>شماره تماس :</h4>
+                                <p class="mb-2" dir="ltr">+98 902 163 2566</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact End -->
+
+
+
+{% endblock %}

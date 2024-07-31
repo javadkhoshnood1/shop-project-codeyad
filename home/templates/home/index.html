@@ -50,23 +50,26 @@
                 <div class="col-md-12 col-lg-7">
                     <h1 id="heder-text1" dir="rtl" class="mb-3 text-secondary">بهترین کیفیت ؛کمترین قیمت</h1>
                     <h1 class="mb-5 display-3 text-primary" dir="rtl">فروشگاهی بزرگ با اجناس متنوع </h1>
-                    <div dir="rtl" class="mx-auto d-flex justify-content-between align-items-center">
-                        <input class="form-control border-2 border-secondary  w-75  rounded-pill" type="text"
-                               placeholder="Search">
+                    <form action="{% url "product:search" %}" method="post" dir="rtl"
+                          class="mx-auto d-flex justify-content-between align-items-center">
+
+                        {% csrf_token %}
+                        {{ form.name }}
                         <button type="submit"
                                 class="btn btn-primary border-2 border-secondary rounded-pill text-white h-100"
                                 style="top: 0; right: 25%;">جستجو در محصولات
                         </button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
     <!-- Hero End -->
 
-
+    <div dir="rtl" class="container-fluid" style="margin-top: 10px"><img style="width: 100%;height: 120px"
+                                                               src="{% static 'img/haleh2.png' %}"></div>
     <!-- Featurs Section Start -->
-    <div dir="rtl" class="container-fluid featurs py-5">
+    <div dir="rtl" class="container-fluid featurs ">
         <div class="container py-5">
             <div class="row g-4">
                 {% for attribute in attributes %}
@@ -85,7 +88,151 @@
     </div>
     <!-- Featurs Section End -->
 
+    <!-- Vesitable Shop Start-->
+    <div dir="rtl" class="container-fluid fruite py-5">
+        <div class="container">
+            <div class="tab-class text-center">
+                <div class="row ">
+                    <div class="col-lg-4 text-end">
+                        <h1>جدید ترین محصولات</h1>
+                    </div>
+                    <div class="col-lg-8 text-start">
+                        <ul class="nav nav-pills d-inline-flex text-center mb-5">
+                            <li class="nav-item">
+                                <a class="d-flex m-2 py-2 bg-light rounded-pill active" data-bs-toggle="pill"
+                                   href="{% url "product:product_list" %}">
+                                    <span class="text-dark" style="width: 200px;background-color: #fd7e14">نمایش همه محصولات</span>
+                                </a>
+                            </li>
 
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane fade show p-0 active">
+                        <div class="row g-4">
+                            <div class="col-lg-12">
+                                <div class="row g-4">
+                                    {% for product in last_product %}
+                                        <div class="container card-product">
+                                            <div class="card">
+                                                <div class="card-head">
+
+                                                    <img style="margin-bottom: 100px" width="150" height="150"
+                                                         src="{{ product.image.url }}" alt="Shoe"
+                                                         class="product-img">
+                                                    <div class="product-detail">
+                                                        <h2>{{ product.name }}</h2> {{ product.text|truncatewords:10 }}
+                                                    </div>
+
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="product-desc">
+        <span class="product-title">
+
+                دسته بندی :
+            {% for i in product.category.all %}
+
+                {{ i.name }},
+
+            {% endfor %}
+            <br>
+                <span class="badge">
+                  New
+                </span>
+        </span>
+                                                        <span class="product-caption">
+ضمانت :{{ product.quality }}
+              </span>
+                                                    </div>
+                                                    <div class="product-properties">
+                                                        <ul class="ul-color">
+                                                            <li><a href="#" class="orange active"></a></li>
+                                                            <li><a href="#" class="green"></a></li>
+                                                            <li><a href="#" class="yellow"></a></li>
+                                                        </ul>
+                                                        </span>
+                                                        <span class="product-price">
+                <b>{{ product.price|intcomma:0 }}</b>تومان
+              </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Vesitable Shop End -->
+    <div dir="rtl" class="container">
+        <div class="row ">
+            <div class="col-lg-4 text-end">
+                <h1>محبوب ترین دسته بندی ها </h1>
+            </div>
+            <div class="col-lg-8 text-start">
+                <ul class="nav nav-pills d-inline-flex text-center mb-5">
+                    <li class="nav-item">
+                        <a style="background-color: #FFB524" class="d-flex m-2 py-2 bg-light rounded-pill active"
+                           data-bs-toggle="pill"
+                           href="{% url "product:product_list" %}">
+                            <span class="text-dark"
+                                  style="width: 200px;background-color: #fd7e14">نمایش همه دسته بندی ها</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <!-- Featurs Start -->
+        <div class="container-fluid service mb-2">
+            <div class="container mb-3">
+                <div class="row g-4 justify-content-center">
+                    {% for item in categorys %}
+                        <div class="col-md-6 col-lg-4">
+                            <a href="#">
+                                <div class="service-item  rounded border border-warning">
+                                    <img src="{{ item.image.url }}" class="img-fluid rounded-top w-100"
+                                         alt="">
+                                    <div class="px-4 rounded-bottom">
+                                        <div style="background-color: #fd7e14" class="service-content  text-center p-4 rounded">
+                                            <h3 class="text-white">{{ item.name }}</h3>
+                                            <h5 class="mb-0">{{ item.body }}</h5>
+                                            <h6 class="mb-0" style="color: black">تعداد محصولات این دسته :  {{ item.product_set.count }}عدد  </h6>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- Featurs End -->
+    </div>
+
+
+    <div class="container-fluid" style="margin-top: 10px"><img style="width: 100%;height: 120px"
+                                                               src="{% static 'img/haleh.png' %}"></div>
     <!-- Fruits Shop Start-->
     <div dir="rtl" class="container-fluid fruite py-5">
         <div class="container">
@@ -98,7 +245,7 @@
                         <ul class="nav nav-pills d-inline-flex text-center mb-5">
                             <li class="nav-item">
                                 <a class="d-flex m-2 py-2 bg-light rounded-pill active" data-bs-toggle="pill"
-                                   href="#tab-1">
+                                   href="{% url "product:product_list" %}">
                                     <span class="text-dark" style="width: 200px;background-color: #fd7e14">نمایش همه محصولات</span>
                                 </a>
                             </li>
@@ -115,7 +262,7 @@
                                         <div class="col-md-6 col-lg-4 col-xl-3 ">
                                             <div class="rounded position-relative fruite-item">
                                                 <div class="fruite-img">
-                                                    <img style="width: 350px;height: 250px"
+                                                    <img style="width: 200px;height: 200px"
                                                          src="{{ product.image.url }}"
                                                          class="rounded-top g-4" alt="">
                                                 </div>
@@ -131,8 +278,7 @@
                                                      class="p-4  rounded-bottom">
                                                     <h4 style="color: white">{{ product.name }}</h4>
                                                     <p style="word-wrap: break-word">{{ product.text|truncatechars:30 }}</p>
-                                                    <div class="d-flex justify-content-between ">
-                                                        <p class="text-white mb-0">{{ product.size }}kg</p>
+                                                    <div class="d-flex justify-content-center align-items-center ">
                                                         <a style="height: 40px;width: 150px;border: 1px solid #fd7e14;border-radius: 20px"
                                                            href="#"
                                                            class="p-1 text-center">افزودن به سبد خرید</a>
@@ -161,107 +307,12 @@
     <!-- Fruits Shop End-->
 
 
-    <!-- Featurs Start -->
-
-    <div dir="rtl" class="container-fluid fruite py-5">
-        <div class="container py-5">
-            <div class="tab-class text-center">
-                <div class="row ">
-                    <div class="col-lg-8 text-end">
-                        <h1>محبوب ترین دسته بندی ها </h1>
-                    </div>
-                    <div class="col-lg-4 text-start">
-                        <ul class="nav nav-pills d-inline-flex text-center mb-5">
-                            <li class="nav-item">
-                                <a class="d-flex m-2 py-2 bg-light rounded-pill active" data-bs-toggle="pill"
-                                   href="#tab-1">
-                                <span class="text-dark"
-                                      style="width: 200px;background-color: #fd7e14">نمایش همه دسته بندی ها </span>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="row g-4 justify-content-center">
-                {% for ctegory in categorys %}
-                    <div class="col-md-6 col-lg-4">
-                        <a href="#">
-                            <div class="service-item bg-secondary rounded border border-secondary">
-                                <img src="{{ ctegory.image.url }}" class="img-fluid rounded-top w-100" alt="">
-                                {% if ctegory.id == 2 %}
-                                    <div class="px-5 py-2 rounded-bottom">
-                                        <div class="service-content bg-primary text-center p-2 rounded">
-                                            <h5 class="text-white">{{ ctegory.name }}</h5>
-                                            <h3 class="mb-0">{{ ctegory.body|truncatechars:25 }}</h3>
-                                        </div>
-                                    </div>
-                                {% else %}
-                                    <div style="background-color: #3b4c4d" class="px-5 py-2 rounded-bottom">
-                                        <div class="service-content bg-primary text-center p-2 rounded">
-                                            <h5 class="text-white">{{ ctegory.name }}</h5>
-                                            <h3 class="mb-0">{{ ctegory.body|truncatechars:25 }}</h3>
-                                        </div>
-                                    </div>
-
-
-                                {% endif %}
-                            </div>
-                        </a>
-                    </div>
-
-
-
-
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <!-- Featurs End -->
-
-
-    <!-- Vesitable Shop Start-->
-    <div class="container-fluid vesitable">
-        <div class="container">
-            <div class="testimonial-header text-center">
-                <h1 class="text-primary">جدیدترین محصولات</h1>
-                <h5 class=" mb-2 text-dark">آخرین محصولات به روز رسانی شده</h5>
-            </div>
-            <div class="owl-carousel vegetable-carousel justify-content-center">
-                {% for product in last_product %}
-                    <div class="rounded position-relative vesitable-item">
-                        <div class="vesitable-img">
-                            <img src="{{ product.image.url }}" width="150" height="300" class="rounded-top" alt="">
-                        </div>
-                        <div class="text-white px-3 py-1 rounded position-absolute"
-                             style="top: 10px; right: 10px;background-color: #FFB524">{{ product.category.last }}
-                        </div>
-                        <div dir="rtl" class="p-4 rounded-bottom">
-                            <h4 class="text-white">{{ product.name }}</h4>
-                            <p>{{ product.text|truncatechars:20 }}</p>
-                            <div dir="rtl" class="d-flex justify-content-between flex-lg-wrap">
-                                <p class="text-dark fs-5 fw-bold mb-0">  {{ product.price|intcomma:0 }} تومان</p>
-                                <a href="#" class="btn border border-secondary rounded-pill" style="color: #81c408">
-                                    افزودن
-                                    به سبد خرید<i
-                                        class="fa fa-shopping-bag me-2 text-primary"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <!-- Vesitable Shop End -->
-
-
     <!-- Tastimonial Start -->
-    <div class="container-fluid testimonial">
-        <div class="container">
+    <div class="container-fluid testimonial py-5">
+        <div class="container py-5">
             <div class="testimonial-header text-center">
-                <h1 class="text-primary">آخرین نظرات</h1>
-                <h5 class="mb-5 text-dark">آخرین نظرات آپلود شده </h5>
+                <h4 class="text-primary">Our Testimonial</h4>
+                <h1 class="display-5 mb-5 text-dark">Our Client Saying!</h1>
             </div>
             <div class="owl-carousel testimonial-carousel">
                 <div class="testimonial-item img-border-radius bg-light rounded p-4">
@@ -275,7 +326,7 @@
                         </div>
                         <div class="d-flex align-items-center flex-nowrap">
                             <div class="bg-secondary rounded">
-                                <img src="{% static 'img/testimonial-1.jpg' %}" class="img-fluid rounded"
+                                <img src="img/testimonial-1.jpg" class="img-fluid rounded"
                                      style="width: 100px; height: 100px;" alt="">
                             </div>
                             <div class="ms-4 d-block">
@@ -303,7 +354,7 @@
                         </div>
                         <div class="d-flex align-items-center flex-nowrap">
                             <div class="bg-secondary rounded">
-                                <img src="{% static 'img/testimonial-1.jpg' %}" class="img-fluid rounded"
+                                <img src="img/testimonial-1.jpg" class="img-fluid rounded"
                                      style="width: 100px; height: 100px;" alt="">
                             </div>
                             <div class="ms-4 d-block">
@@ -331,7 +382,7 @@
                         </div>
                         <div class="d-flex align-items-center flex-nowrap">
                             <div class="bg-secondary rounded">
-                                <img src="{% static 'img/testimonial-1.jpg' %}" class="img-fluid rounded"
+                                <img src="img/testimonial-1.jpg" class="img-fluid rounded"
                                      style="width: 100px; height: 100px;" alt="">
                             </div>
                             <div class="ms-4 d-block">

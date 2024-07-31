@@ -1,0 +1,54 @@
+.text-label {
+    color: #fd7e14;
+}
+
+@font-face {
+    font-family: 'yekan';
+    src: url('Yekan.ttf');
+
+
+}
+
+body {
+    font-family: yekan;
+    background-color: #1e2125;
+}
+
+.card {
+
+    background-color: #1e2125;
+    box-shadow: 1px 1px 10px #fd7e14;
+    transition: all ease 1s;
+}
+
+.card:hover {
+    box-shadow: 3px 3px 15px #fd7e14;
+
+
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    color: #fd7e14;;
+}
+
+.btn-chanage {
+    border-radius: 20px;
+    border: 1px solid #fd7e14;
+    background-color: #1e2125;
+    color: white;
+}
+
+.item-tab {
+    background-color: #1e2125;
+    border: 1px solid #fd7e14;
+    border-radius: 10px;
+    padding: 8px;
+    color: white;
+}
+
+.img-user {
+    width: 150px;
+    height: 150px;
+    border-radius: 20px;
+    border: 1px solid #fd7e14;
+}

@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     "contactus",
     "product",
     "accounts",
+    "cart",
+    "about",
     'django_cleanup.apps.CleanupConfig',
     'django.contrib.humanize',
 
@@ -104,7 +106,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'context_processors.context_processors.category'
+                "context_processors.context_processors.categoryss",
+                # "context_processors.context_processors.count_cart",
+                "context_processors.context_processors.products_sidbar_discount"
+
             ],
         },
     },

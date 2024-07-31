@@ -57,94 +57,212 @@
             <div class="row g-4">
                 <div class="col-lg-12">
                     <div class="row g-4">
-                        <div class="col-xl-3">
-                            <div dir="ltr" class="input-group w-100 mx-auto d-flex">
-                                <input type="search" class="form-control p-3" placeholder="keywords"
-                                       aria-describedby="search-icon-1">
-                                <span id="search-icon-1" class="input-group-text p-3"><i
-                                        class="fa fa-search"></i></span>
+                        <form action="{% url 'product:search' %}" method="post" class="col-xl-3">
+                            {% csrf_token %}
+                            <div dir="rtl" class="input-group w-100 mx-auto d-flex">
+                                {{ form.name }}
+                                <button type="submit" class="search-icon-o"><i
+                                        class="fa fa-search"></i></button>
                             </div>
-                        </div>
+                        </form>
                         {% if category_name %}
                             <div class="col-xl-9 ">
                                 <h3 style="color: white;text-align: center" class="mb-4">همه محصولات
                                     دسته {{ category_name }}</h3>
                             </div>
                         {% else %}
-                            <div class="col-xl-9 ">
-                                <h1 style="color: white;text-align: center" class="mb-4">همه محصصولات فروشگاه</h1>
-                            </div>
+                            {% if name_search %}
+                                <div class="col-xl-9 text-center "><span
+                                        style="font-size: 18px;color: #fd7e14"> کلمه مد نظ شما :{{ name_search }}</span>
+                                </div>
+                            {% else %}
+                                <div class="col-xl-9 ">
+                                    <h1 style="color: white;text-align: center" class="mb-4">همه محصصولات فروشگاه</h1>
+                                </div>
+                            {% endif %}
 
                         {% endif %}
                     </div>
                     <div class="row g-4">
                         <div class="col-lg-3">
-                            <div class="row g-4">
+                            <div class="row g-4" style="border-top: 1px solid #fd7e14">
                                 <div class="col-lg-12">
                                     {% include 'includes/sidbar_category.html' %}
                                 </div>
+                        <form method="get">
                                 <div class="col-lg-12">
-                                    <div class="mb-3">
+                                    <div class="mb-3" style="border-top: 1px solid #fd7e14;padding-top: 10px">
                                         <h4 style="color: white" class="mb-2">قیمت </h4>
-                                        <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput"
-                                               min="0" max="3000" value="0" oninput="amount.value=rangeInput.value">
-                                        <output id="amount" name="amount" min-velue="0" max-value="3000"
-                                                for="rangeInput">0
-                                        </output>
+
+                                        <div style="display: grid;grid-template-columns: 5fr 5fr">
+                                            <label class="">حداقل قیمت </label>
+                                            <input class="form-control" name="min-price" value=0   />
+
+                                        </div>
+                                        <div class="mt-2" style="display: grid;grid-template-columns: 5fr 5fr">
+                                            <label class="">حداکثر قیمت </label>
+                                            <input class="form-control" name="max-price" value=0 placeholder="بی نهایت"/>
+
+                                        </div>
                                     </div>
+
+
+                                    <div class=""
+                                         style="border-bottom: 1px solid #fd7e14;border-top: 1px solid #fd7e14;padding: 15px 0px">
+                                        <h4 style="color: white" class="mb-2">رنگ </h4>
+                                        <div class="d-block mt-2">
+                                            <input class="form-check-input" name="colors" type="checkbox" value="blue"
+                                                   >
+                                            <label style="color: blue" class="form-check-label" for="blue">
+                                                ابی
+                                            </label>
+                                        </div>
+                                        <div class="d-block mt-2">
+
+                                            <input class="form-check-input" name="colors" type="checkbox" value="black"
+                                                   >
+                                            <label style="color: black" class="form-check-label" for="black">
+                                                مشکی
+                                            </label></div>
+                                        <div class="d-block mt-2">
+
+
+                                            <input class="form-check-input" name="colors" type="checkbox" value="red"
+                                                   id="black">
+                                            <label style="color: red" class="form-check-label" for="red">
+                                                قرمز
+                                            </label>
+                                        </div>
+                                        <div class="d-block mt-2">
+
+
+                                            <input class="form-check-input" name="colors" type="checkbox" value="yellow"
+                                                   id="yellow">
+                                            <label style="color:yellow" class="form-check-label" for="yellow">
+                                                زرد
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class=""
+                                         style="border-bottom: 1px solid #fd7e14;border-top: 1px solid #fd7e14;padding: 15px 0px">
+                                        <h4 style="color: white" class="mb-2">سایز </h4>
+                                        <div class="d-block mt-2">
+                                            <input class="form-check-input" name="sizes" type="checkbox" value=11
+                                                   id="eleven">
+                                            <label  class="form-check-label" for="eleven">
+                                                11
+                                            </label>
+                                        </div>
+                                        <div class="d-block mt-2">
+
+                                            <input class="form-check-input" name="sizes" type="checkbox" value=12
+                                                   id="twodress">
+                                            <label  class="form-check-label" for="twodress">
+                                                12
+                                            </label></div>
+                                        <div class="d-block mt-2">
+
+
+                                            <input class="form-check-input" name="sizes" type="checkbox" value=13
+                                                   id="treeders">
+                                            <label  class="form-check-label" for="treeders">
+                                                13
+                                            </label>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="d-flex justify-content-center my-4">
-                                    <a href="#"
+                                    <button type="submit"
                                        class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">اعمال
-                                        تغییرات </a>
+                                        تغییرات </button>
                                 </div>
                                 <!--this is inja -->
                                 {% include 'includes/sidbar_discount_product.html' %}
+                        </form>
                             </div>
                         </div>
                         <div class="col-lg-9">
                             <div class="row g-4 justify-content-center">
-                                {% for product in products %}
-                                    <div class="col-md-6 col-lg-6 col-xl-4">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img height="230" width="300" src="{{ product.image.url }}"
-                                                     class="rounded-top" alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                 style="top: 10px; left: 10px;">
-                                                {% for ctegory in product.category.all %}
-                                                    {{ ctegory.name }},
-                                                {% endfor %}
-                                            </div>
-                                            <div class="p-4  rounded-bottom">
-                                                <a href="{% url 'product:product_detail' product.id %}"><h4
-                                                        style="color: white">{{ product.name }}</h4>
-                                                </a>
-                                                <p>{{ product.text|truncatechars:20 }}</p>
-                                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                                    <p class="text-dark fs-5 fw-bold mb-0">{{ product.price|intcomma:0 }}تومان </p>
-                                                    <a href="#"
-                                                       class="btn border border-secondary rounded-pill px-3 text-primary">
-                                                        افزودن به شبد خرید<i
-                                                            class="fa fa-shopping-bag me-2 text-primary"></i>
-                                                    </a>
+
+                                {% if products %}
+                                    {% for product in products %}
+                                        <div class="container card-product">
+                                            <div class="card">
+                                                <div class="card-head">
+
+                                                    <img style="margin-bottom: 100px" width="150" height="150"
+                                                         src="{{ product.image.url }}" alt="Shoe"
+                                                         class="product-img">
+                                                    <div class="product-detail text-center">
+                                                        <a href="{% url "product:product_detail" product.id %}"><h2
+                                                                class="text-center mt-2">{{ product.name }}</h2>
+                                                        </a> {{ product.text|truncatewords:10 }}
+                                                    </div>
+                                                    {#                                                <span class="back-text">#}
+                                                    {#              FAS#}
+                                                    {#            </span>#}
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="product-desc">
+        <span class="product-title text-center">
+
+                دسته بندی :
+            {% for i in product.category.all %}
+
+                {{ i.name }},
+
+            {% endfor %}
+            <br>
+                <span class="badge">
+                  New
+                </span>
+        </span>
+                                                        <span class="text-center product-caption">
+ضمانت :{{ product.quality }}
+              </span>
+                                                    </div>
+                                                    <div class="product-properties d-flex justify-content-center align-items-center mt-3    ">
+                                                        <ul class="ul-color">
+                                                            <li><a href="#" class="orange active"></a></li>
+                                                            <li><a href="#" class="green"></a></li>
+                                                            <li><a href="#" class="yellow"></a></li>
+                                                        </ul>
+                                                        </span>
+                                                        <span class="product-price text-center ">
+                <b>{{ product.price|intcomma:0 }}</b>تومان
+              </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                {% endfor %}
+                                    {% endfor %}
+                                {% else %}
+                                    <h4 class="text-center" style="color:#fd7e14 ">محصولی با اسم مد نظر شما یافت
+                                        نشد</h4>
+
+                                {% endif %}
                                 <div class="col-12">
-                                    <div class="pagination d-flex justify-content-center mt-5">
-                                        <a href="#" class="rounded">&laquo;</a>
-                                        <a href="#" class="active rounded">1</a>
-                                        <a href="#" class="rounded">2</a>
-                                        <a href="#" class="rounded">3</a>
-                                        <a href="#" class="rounded">4</a>
-                                        <a href="#" class="rounded">5</a>
-                                        <a href="#" class="rounded">6</a>
-                                        <a href="#" class="rounded">&raquo;</a>
+                                    <div dir="ltr" class="pagination d-flex justify-content-center mt-5 mb-2 ">
+                                        {% if products.has_previous %}
+                                            <a href="?page={{ products.previous_page_number }}"
+                                               class="rounded">&laquo;</a>
+                                        {% endif %}
+
+                                        {% for  i in products.paginator.page_range %}
+
+                                            <a href="?page={{ i }}" class="active rounded">{{ i }}</a>
+
+
+
+                                        {% endfor %}
+                                        {% if products.has_next %}
+
+                                            <a href="?page={{ products.next_page_number }}"
+                                               class="rounded">&raquo;</a>
+                                        {% endif %}
+
                                     </div>
                                 </div>
                             </div>

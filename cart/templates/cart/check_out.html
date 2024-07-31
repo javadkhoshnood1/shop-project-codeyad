@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load humanize %}
+{% block title %}
+    ثبت اطلاعات تکمیلی
+{% endblock %}
+
+{% block countent %}
+    <body style="background-color: #1e2125">
+
+
+    <!-- Modal Search Start -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content rounded-0">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex align-items-center">
+                    <div class="input-group w-75 mx-auto d-flex">
+                        <input type="search" class="form-control p-3" placeholder="keywords"
+                               aria-describedby="search-icon-1">
+                        <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Search End -->
+    <!-- Single Page Header start -->
+    <div dir="rtl" class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6">ثبت اطلاعات </h1>
+        <ul class="list-unstyled d-flex align-items-center justify-content-center mb-0">
+            <li class="breadcrumb-item text-white "><a class="text-white" href="{% url 'Home:index' %}">صفحه اصلی</a>
+            </li>
+            /
+            <li class="breadcrumb-item">
+                <a style="color:  white"
+                   href="{% url 'product:product_list' %}">فروشگاه</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a style="color:  white">سبد خرید </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a
+                        href="#">ثبت اطلاعات</a>
+            </li>
+
+        </ul>
+    </div>
+    <!-- Single Page Header End -->
+
+
+    <!-- Checkout Page Start -->
+    {% if request.user.is_authenticated %}
+        <div dir="rtl" class="container-fluid">
+            <div class="container py-5">
+                <h1 class="mb-4" style="color: white">ثبت اطلاعات دقیق کاربر</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="alert alert-danger">
+                        {{ form.errors }}
+                    </div>
+                    <div class="row g-5">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-6">
+                                    <div class="form-item w-100">
+                                        {{ form.first_name.label }}
+                                        {{ form.first_name }}
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-6">
+                                    <div class="form-item w-100">
+                                        {{ form.last_name.label }}
+                                        {{ form.last_name }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-item">
+                                {{ form.address.label }}
+                                {{ form.address }}
+                            </div>
+                            <div class="form-item">
+                                {{ form.phone.label }}
+                                {{ form.phone }}
+                            </div>
+                            <div class="form-item">
+                                {{ form.email.label }}
+                                {{ form.email }}
+                            </div>
+
+
+                            <div class="form-item">
+                                {{ form.discription.label }}
+                                {{ form.discription }}
+                            </div>
+                        </div>
+                        <hr>
+                        <h1 style="color: white">سبد خرید شما </h1>
+
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">image</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">color</th>
+                                        <th scope="col">size</th>
+                                        <th scope="col">tedad</th>
+                                        <th scope="col">total</th>
+
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in cart %}
+                                        <tr>
+                                            <th scope="row">
+                                                <div class="d-flex align-items-center">
+                                                    <img src="{{ item.product.image.url }}"
+                                                         class="img-fluid me-5 rounded-circle"
+                                                         style="width: 80px; height: 80px;" alt="">
+                                                </div>
+                                            </th>
+                                            <td>
+                                                <p class="mb-0 mt-4">{{ item.product.name }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0 mt-4">{{ item.price|intcomma:0 }}تومان</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0 mt-4">{{ item.color }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0 mt-4">{{ item.size }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0 mt-4">{{ item.tedad }} </p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0 mt-4">{{ item.total|intcomma:0 }}تومان</p>
+                                            </td>
+
+
+                                        </tr>
+
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <button  href="{% url 'cart:data_kharid' %}" class="btn btn-outline-primary">تایید اطلاعات خرید و پرداخت</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    {% else %}
+        <div dir="rtl" class="d-flex justify-content-center align-items-center" style="width: 100%;height: 400px">
+
+            <h5 class="text-center text-white">برای دسترسی به این صفحه وارد حساب کاربری خود شوید</h5> //
+            <a href="{% url 'acounts:login' %}" class="btn btn-outline-primary">ورود به حساب کاربری </a>
+        </div>
+        <!-- Checkout Page End -->
+    {% endif %}
+{% endblock %}

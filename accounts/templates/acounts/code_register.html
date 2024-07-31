@@ -15,6 +15,7 @@
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 </head>
@@ -102,6 +103,15 @@
     </div>
 
 </section> <!-- partial -->
+<script>
+    function showbtn() {
+        Swal.fire("کد تایید برای شما ارسال شد!");
+
+    }
+
+    showbtn()
+</script>
+
 
 </body>
 
