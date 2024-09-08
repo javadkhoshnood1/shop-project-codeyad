@@ -42,5 +42,5 @@ class Cart:
             self.session.modified = True
 
     def remove_cart(self):
-        self.cart.popitem()
+        self.cart.clear()
         self.session.modified = True

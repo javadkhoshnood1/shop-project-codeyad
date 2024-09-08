@@ -9,7 +9,7 @@ from django.views import View
 from .forms import UserLoginForm, UserRegisterForm, UserVerificationCodeForm, EditProfileForm
 import ghasedakpack
 from .forms import EditProfileUserForm
-
+from django.contrib import messages
 from random import randint
 from uuid import uuid4
 from .models import RegisterUserOtp, User
@@ -30,6 +30,7 @@ class UserLoginView(View):
             user = authenticate(username=data["phone"], password=data["password"])
             if user is not None:
                 login(request, user)
+                messages.success(request,"login successfully")
                 return redirect("/")
             else:
                 form.add_error("phone", "کاربر با این شماره تماس و رمز عبو پیدا نشد.")
@@ -40,7 +41,10 @@ class UserLoginView(View):
 def user_logout_view(request):
     if request.user.is_authenticated:
         logout(request)
+        messages.success(request,"logout successfully")
         return redirect("/")
+
+    messages.error(request,"not logout ")
     return redirect("/")
 
 
@@ -85,6 +89,8 @@ class UserVerificationcodeView(View):
                 phone = user.phone
                 login(request, user)
                 otp.delete()
+                messages.success(request,"confirm code")
+
                 return redirect(f"/acounts/editprofile/?phone={phone}")
             else:
                 form.add_error("code", "کد تایید درست نیست")
@@ -107,7 +113,8 @@ class UserEditView(View):
             user = User.objects.get(phone=phone)
             request.user.set_password(request.POST.get("password"))
             request.user.save()
-            login(request, user)
+            messages.success(request,"user created")
+
             return redirect("/acounts/login")
 
         return render(request, "acounts/edit_profile_register.html", {"form": form})
@@ -133,11 +140,13 @@ class UserEditProfileView(View):
 
             form.save()
 
-            print("form ok")
+            messages.success(request,"user edited")
             return redirect("/")
         return render(request, "acounts/edit_profile.html", {"form": form})
 
 
 def delete_user_view(request):
     request.user.delete()
+    messages.success(request,"user deleted")
+
     return redirect("/")

@@ -112,7 +112,35 @@
     showbtn()
 </script>
 
-
+{% for message in messages %}
+      {% if message.tags == 'success' %}
+        <!-- sweetalert js -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+          var m = "{{ message }}";
+          Swal.fire({
+    position: "top-end",
+    icon: "success",
+    title: "{{message}}",
+    showConfirmButton: false,
+    timer: 3500
+  });
+        </script>
+      {% else %}
+      <!-- sweetalert js -->
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script>
+        var m = "{{ message }}";
+        Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    text: "{{message}}",
+    footer: "<a href='{% url 'home:index' %}'>redirect to home page</a>"
+  });
+        
+      </script>
+      {% endif %}
+    {% endfor %}
 </body>
 
 </html>

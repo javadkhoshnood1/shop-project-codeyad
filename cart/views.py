@@ -9,7 +9,7 @@ from cart.forms import CheckOutForm
 from cart.models import Order, OrderItems, DiscountCodeApply
 from product.models import Product
 from accounts.models import UserAddress
-
+from django. contrib import messages
 
 class CartProductView(View):
 
@@ -25,7 +25,7 @@ class CartProductView(View):
         for item in cart:
             total_products += item["total"]
         return render(request, "cart/cart_detail.html",
-                      {"cart": cart, "total": total_products, "user_address": user_address})
+                      {"cart": cart, "total": total_products, "user_address": user_address}) 
 
 
 class CartAddProductView(LoginRequiredMixin, View):
@@ -36,6 +36,8 @@ class CartAddProductView(LoginRequiredMixin, View):
         tedad = request.POST.get("tedad")
         cart = Cart(request)
         cart.add(product, tedad, color, size)
+        messages.success(request,"product added your cart")
+
         return redirect("cart:cart_product")
 
 
@@ -77,6 +79,8 @@ class ChackOut(LoginRequiredMixin, View):
                                           price=item["price"], total=item["total"], tedad=item["tedad"])
 
                 order.save()
+                messages.success(request,"user address ")
+
         else:
             order = Order.objects.create(user=request.user)
             total_products = 0
@@ -87,7 +91,8 @@ class ChackOut(LoginRequiredMixin, View):
                                           price=item["price"], total=item["total"], tedad=item["tedad"])
 
                 order.save()
-        print("ok order")
+                messages.success(request,"user address added")
+
         return redirect("cart:data_kharid")
 
 
@@ -110,6 +115,7 @@ class DataKharidView(LoginRequiredMixin, View):
         total_products -= total_products * discount_object.discount / 100
         order.total_price = total_products
         order.save()
+        messages.success(request,"discount applied!")
 
         return render(request, "cart/check_adderss.html",
                       {"user": user, "cart": order, "discount": discount_object, "discount_name": discount})
@@ -134,6 +140,7 @@ class DataUserAdderssView(LoginRequiredMixin, View):
         total_products -= total_products * discount_object.discount / 100
         order.total_price = total_products
         order.save()
+        messages.success(request,"discount applied!")
 
         return render(request, "cart/check_adderss.html", {"user": user, "cart": order, "discount": discount_object})
 
@@ -162,6 +169,7 @@ class AddOrderAddress(View):
                                           price=item["price"], total=item["total"], tedad=item["tedad"])
 
                 order.save()
+                messages.success(request,"product added cart")
 
         return redirect("cart:data_user_address")
 
@@ -170,4 +178,6 @@ class DeleteCartView(View):
     def get(self,request):
         cart =Cart(request)
         cart.remove_cart()
+        messages.success(request,"cart cleared!")
+
         return redirect("Home:index")

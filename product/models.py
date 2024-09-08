@@ -64,7 +64,7 @@ class Product(models.Model):
     discount = models.IntegerField(default=0, null=True, blank=True, verbose_name="تخفیف محصول")
     text = models.TextField(null=True, blank=True, verbose_name="توضیحات محصول")
     created_at = models.DateField(auto_created=True, blank=True, null=True, verbose_name="تاریخ افزودن محصول")
-    category = models.ManyToManyField(Category, null=True, blank=True, verbose_name="دسته بندی ها ")
+    category = models.ManyToManyField(Category,blank=True, verbose_name="دسته بندی ها ")
     quality = models.CharField(choices=Choise_quality_product, max_length=24, blank=True, null=True,
                                verbose_name="کیفیت محصول")
 
